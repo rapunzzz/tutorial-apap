@@ -39,3 +39,49 @@ Pada tutorial kali ini, saya belajar banyak hal tentang pengembangan website dan
 - [ ] Penerapan pada penggunaan function di Controller yang baru saya tahu dan membuat saya bingung penggunaannya
 - [x] Apa itu DTO?
 Objek sederhana yang digunakan untuk mengirim data antara berbagai bagian aplikasi, terutama antara backend dan frontend
+
+****************************************************************
+
+## Tutorial 2
+
+### Apa yang telah saya pelajari hari ini
+Pada Lab Tutorial 2 kali ini, saya belajar beberapa hal seperti penggunaan service yang biasanya digunakan untuk mengelola data dari controller.
+### GitLab
+1. Jelaskan kegunaan DTO pada proyek ini? Apakah bisa jika sebuah proyek tidak menggunakan DTO sama sekali?
+DTO (Data Transfer Object) di proyek ini digunakan sebagai perantara untuk mentransfer data antara client dan server. DTO membantu membuat data yang dikirim lebih terstruktur dan jelas, serta hanya mengirimkan data yang diperlukan. Ini juga meningkatkan keamanan dengan menghindari pengiriman data sensitif dan membuat kode lebih mudah dipelihara. Tanpa DTO, proyek bisa berjalan, tapi mungkin menjadi lebih sulit untuk mengelola data, menjaga keamanan, dan memahami kode.
+Referensi - https://realabishan.medium.com/data-transfer-object-dto-spring-mvc-506cd5340764
+2. Apa itu UUID? Mengapa UUID digunakan? Pada proyek ini, UUID digunakan sebagai apa?
+UUID (Universally Unique Identifier) adalah sebuah kode unik sepanjang 36 karakter yang digunakan untuk memberikan identifikasi yang sangat unik untuk data. UUID membantu memastikan bahwa setiap item, seperti baris data dalam tabel, memiliki ID yang tidak akan pernah sama dengan yang lain, bahkan jika berasal dari sistem yang berbeda. Dalam proyek ini, UUID digunakan untuk memberikan ID unik pada setiap proyek, sehingga setiap proyek dapat dibedakan dengan jelas tanpa khawatir ada ID yang sama dengan proyek lain, meskipun data tersebut berasal dari sumber yang berbeda.
+Referensi - https://www.cockroachlabs.com/blog/what-is-a-uuid/
+3. Pada service, mengapa perlu ada pemisahan antara interface dan implementasinya? Apa keuntungan pemisahan tersebut?
+Pemisahan antara interface dan implementasi penting karena memungkinkan fleksibilitas dan penggunaan ulang kode. Interface hanya mendefinisikan metode yang harus ada tanpa menentukan cara pelaksanaannya, sementara implementasi memberikan detail cara kerja metode tersebut. Ini membuat kode lebih mudah diubah dan diatur, karena Anda bisa mengganti cara kerja tanpa mempengaruhi bagian lain dari kode yang menggunakan interface.
+Referensi - https://medium.com/@Goamhobala/the-java-basics-interface-and-implementation-339d573d9b8a
+4. Menurut kamu anotasi @Autowired pada class Controller tersebut merupakan implementasi dari konsep apa? Dan jelaskan secara singkat cara kerja @Autowired tersebut dalam konteks service dan controller yang telah kamu buat.
+Anotasi @Autowired pada class Controller menerapkan konsep Dependency Injection, di mana Spring otomatis menyediakan dependensi yang diperlukan tanpa kita buat manual. Ini memungkinkan Spring untuk menginjeksi service ke dalam controller, sehingga controller bisa menggunakan service tersebut tanpa harus membuatnya sendiri, membuat kode lebih rapi dan mudah diatur.
+Referensi - https://medium.com/@youeleven/what-is-autowired-in-spring-boot-7285530a55b8  
+5. Apa perbedaan @GetMapping dan @PostMapping? Kapan @GetMapping dan @PostMapping digunakan?
+```@GetMapping``` dan ```@PostMapping``` adalah cara di Spring Framework untuk menangani jenis permintaan HTTP yang berbeda. ```@GetMapping``` digunakan untuk permintaan GET dan biasanya digunakan untuk mengambil atau melihat data dari server. Misalnya, jika kita ingin melihat informasi di halaman web, Kita akan menggunakan ```@GetMapping```. Sebaliknya, ```@PostMapping``` digunakan untuk permintaan POST, yang biasanya digunakan untuk mengirimkan data ke server, seperti saat menambahkan atau memperbarui informasi. Jadi, gunakan ```@GetMapping``` untuk melihat data dan ```@PostMapping``` untuk mengirimkan data.
+Referensi - https://www.java67.com/2023/09/difference-between-getmapping.html
+6. Apakah terdapat jenis mapping lain yang dapat digunakan? Jelaskan minimal 3 jenis mapping lain!
+Selain ```@GetMapping``` dan ```@PostMapping```, ada juga beberapa jenis mapping lain yang digunakan dalam Spring Framework untuk menangani berbagai jenis permintaan HTTP. ```@PutMapping``` digunakan untuk mengganti seluruh informasi yang ada dengan informasi baru. ```@DeleteMapping``` digunakan untuk menghapus informasi yang sudah ada. ```@PatchMapping``` digunakan untuk memperbarui sebagian informasi yang ada, bukan seluruhnya. Masing-masing jenis mapping ini memiliki tujuan spesifik untuk mengelola data dengan cara yang tepat sesuai dengan operasi yang dilakukan.
+Referensi - https://medium.com/@seonggil/spring-getmapping-putmapping-postmapping-deletemapping-patchmapping-difference-984a86520aad 
+7. Jelaskan proses yang terjadi di controller, model, dan service pada proses create proyek, mulai dari fungsi addFormProyek hingga pengguna menerima halaman success-add-proyek.
+Pertama, fungsi addFormProyek akan dipanggil dan berupa GetMapping yang kemudian akan me-return view html nya. Di view html tersebut, user akan mengisi form yang kosong yang kemudian akan disubmit karena form tersebut merupakan method ```POST``` sehingga fungsi addProyek dengan @PostMapping akan menerima url tersebut dan dijalankan fungsinya. Fungsi addProyek yang ada di controller ini akan set atau membuat proyek baru dengan cara memanggil fungsi addProyek yang ada di Service dengan valuenya yang dibawa dari form sebelumhya. Di fungsi addProyek pada Service akan set proyek baru dan dimasukkan ke arraylist Proyek. Jika berhasil, fungsi addProyek di controller akan return view html yang menampilkan view success add proyek tersebut.
+Referensi - https://medium.com/javarevisited/rest-api-using-spring-boot-part-2-adding-model-service-controller-and-dao-implementation-697284b4ff38
+8. Jelaskan mengenai th:object!
+Atribut ```th:object``` dalam Thymeleaf digunakan untuk menentukan objek yang akan menjadi konteks untuk ekspresi-ekspresi lain di dalam elemen tersebut. Ini sangat berguna ketika bekerja dengan form, di mana ```th:object``` biasanya digunakan pada elemen <form> untuk menentukan objek model yang terkait dengan form tersebut. Penggunaan ```th:object``` memungkinkan pengembang untuk mereferensikan properti-properti objek tersebut secara lebih singkat dalam elemen-elemen form anak, tanpa perlu mengulangi nama objek setiap kali.
+Referensi - https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html#creating-a-form
+9. Jelaskan mengenai th:field!
+Atribut ```th:field``` adalah salah satu fitur penting dalam Thymeleaf yang digunakan khusus untuk menangani input form. Atribut ini biasanya digunakan pada elemen-elemen input seperti <input>, <select>, dan <textarea>. Ketika digunakan bersama dengan th:object, ```th:field``` memungkinkan binding dua arah antara elemen form di sisi klien dan properti objek di sisi server. Ini berarti nilai dari elemen form akan secara otomatis diisi dengan nilai properti objek yang sesuai saat rendering, dan sebaliknya, nilai yang diinput oleh pengguna akan secara otomatis dipetakan ke properti objek yang sesuai saat form disubmit. Penggunaan ```th:field``` juga membantu dalam validasi form dan penanganan error.
+Referensi - https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html#binding-to-fields.
+10. Apakah terdapat jenis “th” lainnya? Jelaskan minimal 3 jenis “th” lainnya yang kamu temukan!
+Selain th:object dan th:field, Thymeleaf menyediakan berbagai jenis atribut "th" lainnya untuk memanipulasi tampilan dan logika pada halaman HTML. Tiga jenis atribut "th" lainnya yang sering digunakan adalah: ```th:text``` untuk menampilkan teks dinamis, ```th:if``` untuk menerapkan kondisi rendering elemen, dan ```th:each``` untuk melakukan iterasi pada koleksi data. Atribut ```th:text``` memungkinkan pengembang untuk menyisipkan nilai variabel atau ekspresi ke dalam konten elemen HTML. Atribut ````th:if```` digunakan untuk merender elemen secara kondisional berdasarkan ekspresi boolean. Sedangkan ```th:each``` memungkinkan pengulangan elemen HTML untuk setiap item dalam koleksi, seperti list atau array.
+Referensi - https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#literals
+
+
+### Apa yang belum saya pahami
+Ada beberapa hal yang kurang saya pahami juga seperti :
+- [ ] detail dari @Auotwired
+- [ ] Mengapa ada suatu construstor tapi di buat dalam 2 file yang berbeda yaitu proyekDTO.java dan proyek.java
+
+
