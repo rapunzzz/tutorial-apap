@@ -84,4 +84,50 @@ Ada beberapa hal yang kurang saya pahami juga seperti :
 - [ ] detail dari @Auotwired
 - [ ] Mengapa ada suatu construstor tapi di buat dalam 2 file yang berbeda yaitu proyekDTO.java dan proyek.java
 
+<details>
+<summary>
+<h2>Tutorial 3</h2>
+</summary>
+Pertanyaan
+1. Jelaskan seluruh configuration properties (application, datasource, jpa) yang terdapat di dalam file application.yml!
+2. Pada tutorial ini, kita menggunakan docker container untuk membentuk database. Apa keuntungan menggunakan docker container dibandingkan tanpa menggunakannya?
+3. Jelaskan secara singkat apa itu dan kegunaan dari annotation dibawah ini
+(@Entity, @Table, @Column)
+4. Pada model, kita dapat menentukan relasi antarmodel dengan menggunakan JPA Annotation. Sebutkan seluruh JPA Annotation yang dapat digunakan untuk mendefinisikan relasi antarmodel beserta perbedaannya!
+5. Pada model Proyek, terdapat annotation @JoinTable seperti berikut
+Jelaskan kegunaan annotation tersebut beserta seluruh parameternya!
+6. Jelaskan mengapa kita harus membentuk JPA Repository!
+7. Sebutkan beberapa alternatif dari Java Faker!
 
+Jawabann
+1. File konfigurasi application.yml yang disediakan untuk aplikasi Spring Boot mencakup beberapa properti penting yang dibagi menjadi pengaturan aplikasi, konfigurasi datasource, dan pengaturan JPA. Di bagian spring.application.name, aplikasi ini dinamakan "manpromanpro". Bagian datasource menentukan detail koneksi untuk database PostgreSQL, termasuk URL (jdbc:postgresql://localhost:15001/manpromanpro), username (postgres), dan password (secret99). Bagian jpa mengonfigurasi properti Hibernate, seperti mengatur dialek ke org.hibernate.dialect.PostgreSQLDialect, mengaktifkan pembuatan LOB (Large Object) tanpa konteks, dan menentukan bahwa skema harus dibuat dari awal dengan ddl-auto: create. Format yang terstruktur ini memungkinkan pengorganisasian yang jelas dan memudahkan pengelolaan konfigurasi di berbagai environment, sehingga meningkatkan keterbacaan dan pemeliharaan dibandingkan dengan file properti tradisional.
+Referensi : https://hantsy.gitbook.io/build-a-restful-app-with-spring-mvc-and-angularjs/boot-gs/datasource
+2. Menggunakan Docker Container untuk mengatur database memiliki beberapa keuntungan dibandingkan tidak menggunakan. Salah satu manfaat utamanya adalah konsistensi environment, karena Docker memastikan aplikasi berjalan dengan cara yang sama di berbagai environment, sehingga menghindari masalah terkait perbedaan konfigurasi. Selain itu, Docker Container lebih ringan dan membutuhkan sumber daya lebih sedikit dibandingkan dengan mesin virtual, yang memungkinkan penyebaran dan penskalaan aplikasi yang lebih cepat. Efisiensi ini semakin ditingkatkan dengan kemampuan untuk dengan cepat membuat, menghancurkan, dan mengelola kontainer, yang memperlancar alur kerja pengembangan dan mempercepat proses integrasi dan pengiriman berkelanjutan (CI/CD). Selain itu, Docker memberikan isolasi untuk aplikasi, meningkatkan keamanan dengan membatasi akses antara kontainer dan sistem host. Secara keseluruhan, fitur-fitur ini menjadikan Docker alat yang kuat untuk pengembangan dan penyebaran aplikasi modern di environment cloud. 
+Referensi : https://duplocloud.com/blog/docker-advantages-and-disadvantages/
+3. Dalam Java Persistence API (JPA), anotasi @Entity, @Table, dan @Column sangat penting untuk memetakan objek Java ke tabel database. Anotasi @Entity digunakan untuk mendeklarasikan sebuah kelas sebagai entitas, yang menunjukkan bahwa instance dari kelas ini harus disimpan di database. Anotasi ini wajib untuk entitas JPA, karena memberikan metadata tentang kelas entitas, termasuk kunci utama dan hubungan dengan entitas lainnya.
+
+Anotasi @Table bersifat opsional dan memungkinkan pengembang untuk menyesuaikan pemetaan antara kelas entitas dan tabel database yang sesuai, termasuk menentukan nama tabel, skema, dan katalog jika berbeda dari konvensi penamaan default.
+
+Dan yang terakhir yaitu anotasi @Column digunakan untuk mendefinisikan atribut tertentu untuk sebuah field dalam entitas, seperti namanya di database, apakah bisa bernilai null, panjangnya, dan batasan keunikan. Secara bersama-sama, anotasi ini memfasilitasi pemetaan objek-relasional yang efektif dalam aplikasi JPA.
+Referensi : https://stackoverflow.com/questions/29332907/what-is-the-exact-meaning-of-the-jpa-entity-annotation
+4. Dalam Java Persistence API (JPA), hubungan antara entitas didefinisikan menggunakan beberapa anotasi: @OneToOne, @ManyToOne, @OneToMany, dan @ManyToMany. Anotasi-anotasi ini memfasilitasi pemetaan entitas ke tabel relasional, sehingga memungkinkan pembentukan berbagai jenis hubungan, seperti satu-ke-satu, banyak-ke-satu, satu-ke-banyak, dan banyak-ke-banyak.
+
+Misalnya, @ManyToOne menunjukkan hubungan di mana satu entitas (pemilik) dirujuk oleh entitas lain (entitas yang dirujuk), sementara @OneToMany menunjukkan hubungan di mana satu entitas (pemilik) merujuk ke beberapa entitas. Anotasi ini juga mendukung kustomisasi melalui parameter tambahan seperti fetch (memuat data secara langsung atau lambat), optional (apakah hubungan itu wajib atau opsional), dan cascade (operasi mana yang harus diterapkan ke entitas terkait).
+
+Memahami anotasi-anotasi ini sangat penting untuk pemetaan objek-relasional yang efektif dalam aplikasi JPA, karena mereka menyederhanakan pengambilan dan pengelolaan data dengan mengotomatisasi pengambilan data terkait dan menangani perubahan database di seluruh hubungan.
+Referensi : https://www.objectdb.com/api/java/jpa/annotations/relationship
+5. Anotasi @JoinTable dalam JPA digunakan untuk mendefinisikan tabel penghubung yang mengelola hubungan antara dua entitas, terutama dalam asosiasi banyak-ke-banyak. Anotasi ini memungkinkan pengembang untuk menyesuaikan properti tabel penghubung, termasuk beberapa parameter kunci.
+
+Parameter name menentukan nama tabel penghubung yang akan dibuat di database. Parameter joinColumns mendefinisikan kolom kunci asing dari entitas pemilik ke tabel penghubung, sementara parameter inverseJoinColumns menentukan kolom kunci asing dari entitas yang berlawanan ke tabel penghubung.
+
+Selain itu, parameter opsional seperti uniqueConstraints dapat digunakan untuk menerapkan batasan unik pada tabel penghubung, dan indexes dapat mendefinisikan indeks untuk meningkatkan kinerja. Dengan memanfaatkan parameter-parameter ini, pengembang dapat menyesuaikan struktur tabel penghubung agar sesuai dengan kebutuhan aplikasi mereka secara efektif.
+Referensi : https://www.javaguides.net/2023/07/jpa-jointable-annotation.html
+6. Membuat repositori JPA sangat penting untuk mengelola data dalam aplikasi Spring Boot, karena ini memberikan abstraksi yang kuat untuk akses dan manipulasi data. Repositori JPA menyederhanakan pelaksanaan operasi CRUD (Create, Read, Update, Delete) dengan memungkinkan pengembang untuk mendefinisikan antarmuka repositori yang secara otomatis mewarisi metode dari CrudRepository atau JpaRepository dari Spring Data, sehingga menghilangkan kebutuhan akan kode yang berulang.
+
+Fungsi ini tidak hanya mempercepat proses pengembangan tetapi juga meningkatkan pemeliharaan dan keterbacaan kode. Selain itu, repositori JPA mendukung pembuatan kueri dinamis berdasarkan konvensi penamaan metode, sehingga memungkinkan kueri yang kompleks tanpa perlu menulis SQL secara eksplisit. Secara keseluruhan, repositori JPA memfasilitasi penanganan data yang efisien sambil mematuhi praktik terbaik dalam desain perangkat lunak, seperti pola repositori.
+Referensi: https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html
+7. Beberapa alternatif untuk Java Faker dalam menghasilkan data palsu di Java termasuk Datafaker, jFairy dan Instancio. Datafaker adalah fork modern dari Java Faker yang menawarkan pustaka yang diperbarui dengan banyak generator data palsu dan dirancang untuk digunakan dengan Java 17 ke atas, menjadikannya pilihan yang cocok untuk aplikasi modern.
+
+jFairy adalah opsi lain yang menyediakan API sederhana untuk menghasilkan data acak, meskipun masih dalam tahap pengembangan awal. Instancio fokus pada pembuatan data uji menggunakan API yang mudah dibaca dan memungkinkan pembuatan objek yang lebih kompleks.
+Referensi : https://dzone.com/articles/datafaker-a-solid-alternative-to-using-production
+</details>
