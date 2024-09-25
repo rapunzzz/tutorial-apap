@@ -1,65 +1,81 @@
 package apap.tutorial.manpromanpro.service;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import apap.tutorial.manpromanpro.repository.ProyekDb;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.model.Proyek;
 
 @Service
-public class ProyekServiceImpl implements ProyekService{
-    private List<Proyek> listProyek = new ArrayList<Proyek>();
+public class ProyekServiceImpl implements ProyekService {
+    @Autowired
+    ProyekDb proyekDb;
 
     @Override
-    public void createProyek(Proyek proyek) {
-        listProyek.add(proyek);
+    public Proyek addProyek(Proyek proyek) {
+        return proyekDb.save(proyek);
     }
 
     @Override
     public List<Proyek> getAllProyek() {
-        return listProyek;
+        Sort.Order orderByNama = Sort.Order.by("nama").ignoreCase();
+        Sort sort = Sort.by(orderByNama);
+        return proyekDb.findBytanggalDihapusIsNull(sort);
     }
 
     @Override
-    public Proyek getProyekById(UUID id) {
-        for (Proyek proyek : listProyek) {
-            if (proyek.getId().equals(id)) {
+    public List<Proyek> getAllProyek(String nama, String status) {
+        Sort.Order orderByNama = Sort.Order.by("nama").ignoreCase();
+        Sort sort = Sort.by(orderByNama);
+        if (status.isEmpty()) {
+            return proyekDb.findByNamaContainingIgnoreCaseAndTanggalDihapusIsNull(nama, sort);
+        } else if (nama.isEmpty()) {
+            return proyekDb.findByStatusIgnoreCaseAndTanggalDihapusIsNull(status, sort);
+        } else {
+            return proyekDb.findByNamaContainingIgnoreCaseAndStatusIgnoreCaseAndTanggalDihapusIsNull(nama, status, sort);
+        }
+    }
+
+    @Override
+    public Proyek getProyekById(UUID idProyek) {
+        for (Proyek proyek : getAllProyek()) {
+            if (proyek.getId().equals(idProyek)) {
                 return proyek;
             }
         }
-        return null; 
+        return null;
     }
 
     @Override
-    public void updateProyek(Proyek proyek) {
-        // Cari proyek yang sudah ada berdasarkan id
-        Proyek proyekToUpdate = null;
-        for (Proyek a : listProyek) {
-            if (a.getId().equals(proyek.getId())) {
-                proyekToUpdate = a;
-                break;
-            }
+    public Proyek updateProyek(Proyek proyek) {
+        Proyek getProyek = getProyekById(proyek.getId());
+        if (getProyek != null) {
+            getProyek.setNama(proyek.getNama());
+            getProyek.setDeskripsi(proyek.getDeskripsi());
+            getProyek.setTanggalMulai(proyek.getTanggalMulai());
+            getProyek.setTanggalSelesai(proyek.getTanggalSelesai());
+            getProyek.setStatus(proyek.getStatus());
+            getProyek.setDeveloper(proyek.getDeveloper());
+            getProyek.setTanggalDiubah(new Date());
+            proyekDb.save(getProyek);
+
+            return getProyek;
         }
 
-        if (proyekToUpdate != null) {
-            
-            // Update nilai-nilai proyek
-            proyekToUpdate.setNama(proyek.getNama());
-            proyekToUpdate.setDeveloper(proyek.getDeveloper());
-            proyekToUpdate.setTanggalMulai(proyek.getTanggalMulai());
-            proyekToUpdate.setTanggalSelesai(proyek.getTanggalSelesai());
-            proyekToUpdate.setStatus(proyek.getStatus());
-
-        } else {
-            throw new NoSuchElementException("Proyek tidak ditemukan");
-        }
+        return null;
     }
 
     @Override
     public void deleteProyek(Proyek proyek) {
-        listProyek.remove(proyek);
+        proyek.setTanggalDihapus(new Date());
+        proyekDb.save(proyek);
+        // proyekDb.delete(proyek);
     }
+
 }

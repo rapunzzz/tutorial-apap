@@ -6,13 +6,10 @@ import java.util.UUID;
 import apap.tutorial.manpromanpro.model.Proyek;
 
 public interface ProyekService {
-    void createProyek(Proyek proyek);
-
+    Proyek addProyek(Proyek proyek);
     List<Proyek> getAllProyek();
-
+    List<Proyek> getAllProyek(String nama,String status);
     Proyek getProyekById(UUID id);
-
-    void updateProyek(Proyek proyek);
-    
+    Proyek updateProyek(Proyek proyek);
     void deleteProyek(Proyek proyek);
 }
