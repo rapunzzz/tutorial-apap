@@ -1,7 +1,9 @@
 package apap.tutorial.manpromanpro.dto.request;
 import apap.tutorial.manpromanpro.model.Developer;
+import apap.tutorial.manpromanpro.model.Pekerja;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,9 @@ public class AddProyekRequestDTO {
 
     @NotBlank(message = "Status tidak boleh kosong")
     private String status;
+
+    @NotNull(message = "Pekerja proyek tidak boleh kosong")
+    private List<Pekerja> listPekerja;
 
     private Developer developer;
 

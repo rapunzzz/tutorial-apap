@@ -34,7 +34,7 @@ public class DeveloperController {
         var developerDTO = new AddDeveloperRequestDTO();
 
         model.addAttribute("developerDTO", developerDTO);
-
+        model.addAttribute("activeTab","developer");
         return "form-add-developer";
     }
 
@@ -51,6 +51,7 @@ public class DeveloperController {
 
         model.addAttribute("responseMessage",
                 String.format("Developer %s dengan ID %s berhasil ditambahkan.", developer.getNama(), developer.getId()));
+        model.addAttribute("activeTab","developer");
         return "response-developer";
     }
 
@@ -59,6 +60,7 @@ public class DeveloperController {
         var listDeveloper = developerService.getAllDeveloper();
 
         model.addAttribute("listDeveloper", listDeveloper);
+        model.addAttribute("activeTab","developer");
         return "viewall-developer";
     }
 
@@ -67,6 +69,7 @@ public class DeveloperController {
         var developer = developerService.getDeveloperById(id);
 
         model.addAttribute("developer", developer);
+        model.addAttribute("activeTab","developer");
         return "view-developer";
     }
 
@@ -85,7 +88,7 @@ public class DeveloperController {
         model.addAttribute("developerDTO", developerDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
         model.addAttribute("statusLevel", StatusLevel.values());
-
+        model.addAttribute("activeTab","developer");
         return "form-update-developer";
     }
 
@@ -102,7 +105,7 @@ public class DeveloperController {
 
         model.addAttribute("responseMessage",
                 String.format("Developer %s dengan ID %s berhasil diupdate.", developer.getNama(), developer.getId()));
-
+        model.addAttribute("activeTab","developer");
         return "response-developer";
     }
 

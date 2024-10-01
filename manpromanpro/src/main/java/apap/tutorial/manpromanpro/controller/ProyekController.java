@@ -2,6 +2,7 @@ package apap.tutorial.manpromanpro.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import apap.tutorial.manpromanpro.dto.request.AddProyekRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
+import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.service.DeveloperService;
+import apap.tutorial.manpromanpro.service.PekerjaService;
 import apap.tutorial.manpromanpro.service.ProyekService;
 import jakarta.validation.Valid;
 
@@ -27,6 +30,9 @@ public class ProyekController {
     
     @Autowired
     private ProyekService proyekService;
+
+    @Autowired
+    private PekerjaService pekerjaService;
 
     @Autowired
     private DeveloperService developerService;
@@ -38,7 +44,8 @@ public class ProyekController {
     }
 
     @GetMapping("/")
-    private String home() {
+    private String home(Model model) {
+        model.addAttribute("activeTab","home");
         return "home";
     }
 
@@ -46,13 +53,12 @@ public class ProyekController {
     public String addProyekForm(Model model) {
 
         var proyekDTO = new AddProyekRequestDTO();
-        var listDeveloper = developerService.getAllDeveloper();
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
         model.addAttribute("statusLevel", StatusLevel.values());
-        model.addAttribute("listDeveloper", listDeveloper);
-
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("activeTab","proyek");
         return "form-add-proyek";
     }
 
@@ -72,6 +78,7 @@ public class ProyekController {
         proyek.setTanggalMulai(proyekDTO.getTanggalMulai());
         proyek.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyek.setStatus(proyekDTO.getStatus());
+        proyek.setListPekerja(proyekDTO.getListPekerja());
         proyek.setDeveloper(proyekDTO.getDeveloper());
         proyek.setTanggalDibentuk(new Date());
         proyek.setTanggalDiubah(new Date());
@@ -81,8 +88,37 @@ public class ProyekController {
         
         model.addAttribute("responseMessage",
                 String.format("Proyek %s dengan ID %s berhasil ditambahkan.", proyek.getNama(), proyek.getId()));
-
+        model.addAttribute("activeTab","proyek");
         return "response-proyek";
+    }
+
+    @PostMapping(value = "/proyek/add", params = {"addRow"})
+    public String addRowDeveloperProyek(@ModelAttribute AddProyekRequestDTO addProyekRequestDTO, Model model) {
+        if (addProyekRequestDTO.getListPekerja() == null || addProyekRequestDTO.getListPekerja().isEmpty()) {
+            addProyekRequestDTO.setListPekerja(new ArrayList<>());
+        }
+
+        addProyekRequestDTO.getListPekerja().add(new Pekerja());
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", addProyekRequestDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("activeTab","proyek");
+        return "form-add-proyek";
+    }
+
+    @PostMapping(value = "/proyek/add", params = {"deleteRow"})
+    public String deleteRowDeveloperProyek(@ModelAttribute AddProyekRequestDTO addProyekRequestDTO,
+                                        @RequestParam("deleteRow") int row, Model model) {
+        addProyekRequestDTO.getListPekerja().remove(row);
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", addProyekRequestDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("activeTab","proyek");
+        return "form-add-proyek";
     }
 
     @GetMapping("/proyek/viewall")
@@ -100,7 +136,7 @@ public class ProyekController {
         model.addAttribute("listProyek", listProyek);
         model.addAttribute("nama", nama);
         model.addAttribute("status", status);
-
+        model.addAttribute("activeTab","proyek");
         return "viewall-proyek";
     }
 
@@ -109,7 +145,7 @@ public class ProyekController {
         var proyek = proyekService.getProyekById(id);
 
         model.addAttribute("proyek", proyek);
-
+        model.addAttribute("activeTab","proyek");
         return "view-proyek";
     }
 
@@ -124,13 +160,15 @@ public class ProyekController {
         proyekDTO.setTanggalMulai(proyek.getTanggalMulai());
         proyekDTO.setTanggalSelesai(proyek.getTanggalSelesai());
         proyekDTO.setStatus(proyek.getStatus());
+        proyekDTO.setListPekerja(proyek.getListPekerja());
         proyekDTO.setDeveloper(proyek.getDeveloper());
         proyekDTO.setTanggalDiubah(proyek.getTanggalDiubah());
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
         model.addAttribute("statusLevel", StatusLevel.values());
-
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("activeTab","proyek");
         return "form-update-proyek";
     }
 
@@ -153,12 +191,42 @@ public class ProyekController {
         proyekFromDTO.setStatus(proyekDTO.getStatus());
         proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
         proyekFromDTO.setTanggalDiubah(proyekDTO.getTanggalDiubah());
+        proyekFromDTO.setListPekerja(proyekDTO.getListPekerja());
         var proyek = proyekService.updateProyek(proyekFromDTO);
 
         model.addAttribute("responseMessage",
                 String.format("Proyek %s dengan ID %s berhasil diupdate.", proyek.getNama(), proyek.getId()));
-
+        model.addAttribute("activeTab","proyek");
         return "response-proyek";
+    }
+    @PostMapping(value = "/proyek/update", params = {"addRow"})
+    public String addRowDeveloperProyekUpdate(@ModelAttribute UpdateProyekRequestDTO proyekDTO, Model model) {
+        if (proyekDTO.getListPekerja() == null || proyekDTO.getListPekerja().isEmpty()) {
+            proyekDTO.setListPekerja(new ArrayList<>());
+        }
+
+        proyekDTO.getListPekerja().add(new Pekerja());
+        
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("statusLevel", StatusLevel.values());
+
+        model.addAttribute("activeTab","proyek");
+        return "form-update-proyek";
+    }
+
+    @PostMapping(value = "/proyek/update", params = {"deleteRow"})
+    public String deleteRowDeveloperProyekUpdate(@ModelAttribute UpdateProyekRequestDTO proyekDTO,
+                                        @RequestParam("deleteRow") int row, Model model) {
+        proyekDTO.getListPekerja().remove(row);
+        
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("activeTab","proyek");
+        return "form-update-proyek";
     }
 
     @GetMapping("/proyek/{id}/delete")
@@ -168,8 +236,27 @@ public class ProyekController {
 
         model.addAttribute("responseMessage",
                 String.format("Proyek %s dengan ID %s berhasil dihapus.", proyek.getNama(), proyek.getId()));
-
+        model.addAttribute("activeTab","proyek");
         return "response-proyek";
+    }
+
+    @GetMapping("/proyek/datatable")
+    public String listProyekDatatable(@RequestParam(value = "nama", required = false, defaultValue = "") String nama, 
+                            @RequestParam(value = "status", required = false, defaultValue = "") String status, 
+                            Model model) {
+        List<Proyek> listProyek;
+
+        if (nama.isEmpty() && status.isEmpty()) {
+            listProyek = proyekService.getAllProyek();
+        } else {
+            listProyek = proyekService.getAllProyek(nama, status);
+        }
+
+        model.addAttribute("listProyek", listProyek);
+        model.addAttribute("nama", nama);
+        model.addAttribute("status", status);
+        model.addAttribute("activeTab","proyek");
+        return "viewall-proyek-datatable";
     }
 
 }

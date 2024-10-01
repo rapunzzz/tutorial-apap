@@ -3,13 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-  <title>Update Proyek</title>
+  <object th:include= ="~{fragments/common :: js}"  th:remove="tag"></object>
+  <object th:include= ="~{fragments/common :: css}"  th:remove="tag"></object>
 </head>
 
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"> </nav>
     <div class="container">
         <div class="text-center my-4">
             <h2>Update Proyek</h2>
@@ -73,6 +72,30 @@
                                         ></option>
                                     </select>
                                 </div>
+                            </div>
+
+                            <div class="form-group column my-3">
+                                <label for="pekerja" class="col-sm-2 fw-bold col-form-label">Pekerja: </label>
+                                <table class="table">
+                                    <th class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit" name="addRow">Tambah Row</button>
+                                    </th>
+                                    <tr th:each="pekerja, iterationStatus : *{listPekerja}">
+                                        <td>
+                                            <select th:field="*{listPekerja[__${iterationStatus.index}__].id}"
+                                                class="form-control">
+                                                <div th:each="pekerjaExisting : ${listPekerjaExisting}">
+                                                    <option th:text="${pekerjaExisting.nama}"
+                                                        th:value="${pekerjaExisting.id}"></option>
+                                                </div>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button th:value="${iterationStatus.index}" class="btn btn-danger"
+                                                type="submit" name="deleteRow">Hapus</button>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
 
                             <div class="text-center m-3">

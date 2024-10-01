@@ -131,3 +131,51 @@ Referensi: https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/h
 jFairy adalah opsi lain yang menyediakan API sederhana untuk menghasilkan data acak, meskipun masih dalam tahap pengembangan awal. Instancio fokus pada pembuatan data uji menggunakan API yang mudah dibaca dan memungkinkan pembuatan objek yang lebih kompleks.
 Referensi : https://dzone.com/articles/datafaker-a-solid-alternative-to-using-production
 </details>
+
+<details>
+<summary>
+<h2>Tutorial 4</h2>
+</summary>
+Pertanyaan
+1. Jelaskan apa yang terjadi ketika pengguna mengakses URL yang tidak valid? (Contoh: localhost:8080/abcde)
+2. Apa yang dimaksud dengan spring profiles dan apa kegunaannya?
+3. Jelaskan cara kerja “th:include” dan juga “th:replace” dan apa hubungan antar keduanya?
+4. Apakah ada format lain dalam menuliskan konfigurasi pada spring boot selain dalam format yml? Jika ada, sebutkan dan jelaskan perbedaannya!
+5. Mengapa kita memerlukan dua environment yang berbeda (dev & prod), dan apa implikasinya jika tidak dibuat demikian?
+6. Apa saja error yang mungkin terjadi pada aplikasi yang sudah dibuat? Berikan penjelasan dan sebutkan minimal dua jenis error.
+
+Jawabann
+1. Ketika pengguna mengakses URL yang tidak valid seperti "localhost:8080/abcde", server biasanya merespons dengan error "HTTP 404 Not Found". Ini menunjukkan bahwa halaman yang diminta tidak dapat ditemukan di server. Server juga mungkin memberikan halaman atau pesan error khusus tergantung pada konfigurasinya, tetapi respons standar adalah status kode 404, yang menandakan bahwa URL tersebut tidak sesuai dengan endpoint yang valid dalam aplikasi atau konfigurasi server.
+Referensi : https://www.geeksforgeeks.org/what-is-spring-boot-profiles/
+2. Spring profiles adalah mekanisme untuk mengonfigurasi komponen aplikasi agar aktif hanya pada environment tertentu. Kegunaannya adalah untuk memisahkan konfigurasi antara environment yang berbeda, seperti development dan production.
+Referensi: https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles
+3. Dalam Thymeleaf, th:include dan th:replace digunakan untuk menyisipkan fragmen HTML ke dalam template, tetapi keduanya memiliki fungsi yang sedikit berbeda:
+- th:include: Direktif ini menyisipkan fragmen ke dalam template sambil mempertahankan struktur template yang ada. Ini memungkinkan untuk menambahkan konten dari template lain tanpa mengubah konteks template yang sedang digunakan.
+- th:replace: Direktif ini menggantikan seluruh elemen yang ada dengan konten dari fragmen yang ditentukan. Ini berarti elemen asli akan dihapus dan diganti sepenuhnya dengan elemen baru.
+
+Kunci hubungan antara keduanya adalah bahwa keduanya memfasilitasi desain template yang modular, tetapi th:replace lebih mendasar karena menggantikan elemen secara keseluruhan, sementara th:include hanya menambahkan konten tanpa menghapus elemen yang ada.
+Referensi: https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#including-template-fragments
+4. Format Konfigurasi di Spring Boot
+Selain YAML, Spring Boot mendukung beberapa format lain untuk menulis konfigurasi:
+- Properties Files: Format tradisional di mana pengaturan didefinisikan dalam pasangan kunci-nilai (misalnya, application.properties).
+- JSON: Spring Boot dapat membaca konfigurasi dari file JSON, meskipun ini kurang umum.
+- XML: Meskipun tidak biasa untuk aplikasi Spring Boot, XML masih dapat digunakan untuk konfigurasi.
+
+Perbedaan
+- YAML vs. Properti: YAML memungkinkan representasi data yang hierarkis dan umumnya lebih mudah dibaca untuk konfigurasi yang kompleks dibandingkan dengan file properti.
+- JSON dan XML: Sementara JSON menyediakan representasi data terstruktur yang mirip dengan YAML, XML lebih panjang dan kurang disukai dalam aplikasi Spring Boot modern.
+Referensi : https://www.w3schools.com/js/js_json_xml.asp , https://stackoverflow.com/questions/41950978/difference-between-properties-file-yaml-json 
+5. Membuat environment terpisah seperti pengembangan (dev) dan produksi (prod) sangat penting karena beberapa alasan:
+- Isolasi Perubahan: Environment dev memungkinkan pengembang untuk menguji fitur baru tanpa memengaruhi aplikasi yang sedang berjalan.
+- Pengujian Kinerja: Environment prod dioptimalkan untuk kinerja dan stabilitas, sehingga pengguna akhir mendapatkan layanan yang dapat diandalkan.
+
+Tanpa environment terpisah, perubahan yang dilakukan selama pengembangan bisa tanpa sengaja berdampak pada sistem produksi, yang dapat menyebabkan downtime atau penurunan kinerja. Selain itu, risiko keamanan bisa muncul jika konfigurasi pengembangan (yang sering kali kurang aman) digunakan di environment produksi.
+Referensi : https://springframework.guru/spring-profiles/
+6. Jenis-Jenis Error dalam Aplikasi
+Dua jenis error umum yang dapat terjadi dalam sebuah aplikasi adalah HTTP 404 Not Found dan HTTP 500 Internal Server Error.
+
+- HTTP 404 Not Found: Error 404 Not Found adalah kode status HTTP yang menunjukkan bahwa server tidak dapat menemukan kebutuhan yang diminta. Hal ini sering terjadi ketika pengguna mencoba mengakses halaman yang tidak ada, biasanya disebabkan oleh kesalahan dalam mengetik URL, halaman yang dihapus, atau sumber daya yang dipindahkan tanpa pengalihan yang tepat. Penyebab umum dari error ini termasuk URL yang salah ketik, halaman yang telah dihapus atau dipindahkan tanpa memperbarui tautan, serta masalah konfigurasi server seperti file .htaccess yang rusak atau pengaturan DNS yang salah.
+
+- HTTP 500 Internal Server Error: Error 500 Internal Server Error adalah pesan error umum yang menunjukkan bahwa ada masalah di sisi server, tetapi server tidak dapat memberikan rincian lebih lanjut tentang masalah tersebut. Error ini mengindikasikan bahwa server mengalami kondisi yang tidak terduga yang menghalangi pemenuhan permintaan. Penyebab umum dari error ini termasuk misconfigurasi server, masalah dengan pengaturan atau izin, kesalahan dalam skrip sisi server (seperti PHP atau Python) yang tidak dapat dieksekusi dengan benar, serta keterbatasan sumber daya seperti kehabisan memori atau CPU.
+Referensi: https://www.niagahoster.co.id/blog/error-404-not-found-pada-website/ , https://instiki.ac.id/2024/06/12/simak-7-kode-error-pada-website-beserta-penjelasannya/
+</details>
