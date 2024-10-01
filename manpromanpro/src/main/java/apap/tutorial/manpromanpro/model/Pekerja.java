@@ -1,6 +1,7 @@
 package apap.tutorial.manpromanpro.model;
 
 import java.util.List;
+import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -8,11 +9,7 @@ import lombok.AllArgsConstructor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -51,7 +48,11 @@ public class Pekerja {
     @Column(name = "biografi", columnDefinition = "TEXT", nullable = false)
     private String biografi;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "tanggal_dihapus", nullable = true)
+    private Date tanggalDihapus;
+
     @ManyToMany
-    private List<Proyek> listProyek;
+    List<Proyek> listProyek;
 }
 
