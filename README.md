@@ -179,3 +179,79 @@ Dua jenis error umum yang dapat terjadi dalam sebuah aplikasi adalah HTTP 404 No
 - HTTP 500 Internal Server Error: Error 500 Internal Server Error adalah pesan error umum yang menunjukkan bahwa ada masalah di sisi server, tetapi server tidak dapat memberikan rincian lebih lanjut tentang masalah tersebut. Error ini mengindikasikan bahwa server mengalami kondisi yang tidak terduga yang menghalangi pemenuhan permintaan. Penyebab umum dari error ini termasuk misconfigurasi server, masalah dengan pengaturan atau izin, kesalahan dalam skrip sisi server (seperti PHP atau Python) yang tidak dapat dieksekusi dengan benar, serta keterbatasan sumber daya seperti kehabisan memori atau CPU.
 Referensi: https://www.niagahoster.co.id/blog/error-404-not-found-pada-website/ , https://instiki.ac.id/2024/06/12/simak-7-kode-error-pada-website-beserta-penjelasannya/
 </details>
+
+<details>
+<summary>
+<h2>Tutorial 4</h2>
+</summary>
+Pertanyaan
+1. Sebelumnya kita sudah mengetahui pada saat mengirimkan sebuah HTTP Response perlu memasukkan kode status yang berperan memberikan informasi dari response yang akan diterima. Untuk kode status sendiri dikelompokkan menjadi 5 jenis yaitu kode status dengan awalan 1xx, 2xx, 3xx, 4xx, dan 5xx. Coba jelaskan arti dari masing-masing kode status (selain 2xx) dan kapan kita harus menggunakan kode status tersebut!.
+2. Jelaskan fungsi dari anotasi @JsonInclude, @JsonFormat, dan @JsonIgnore!.
+3. Berikan dua contoh tipe requestBody dan dua contoh tipe responseBody yang dapat digunakan pada RESTful API selain tipe application/json! Serta jelaskan juga kapan sebaiknya menggunakan tipe tersebut!.
+4. Jelaskan fungsi dari anotasi @ControllerAdvice dan @RestControllerAdvice!.
+5. Jelaskan fungsi dari object class webClient! Apakah ada alternatif lain yang dapat kita gunakan selain object class webClient?
+
+Jawabann
+1. 1xx: Informational Responses
+
+- 100 Continue: Menunjukkan bahwa bagian awal dari permintaan telah diterima dan klien harus melanjutkan permintaan. Ini sering digunakan dalam situasi di mana payload yang besar sedang dikirim.
+- 101 Switching Protocols: Dikirim sebagai respons terhadap permintaan klien untuk mengubah protokol, menunjukkan bahwa server sedang beralih protokol seperti yang diminta.
+- 102 Processing: Menunjukkan bahwa server telah menerima dan sedang memproses permintaan, tetapi belum ada respons yang tersedia.
+3xx: Redirection Messages
+
+- 300 Multiple Choices: Permintaan memiliki lebih dari satu respons yang mungkin; pengguna atau agen pengguna harus memilih salah satu.
+- 301 Moved Permanently: Menunjukkan bahwa sumber daya telah dipindahkan secara permanen ke URI baru, dan permintaan di masa depan harus menggunakan URI baru ini.
+- 302 Found: Menunjukkan bahwa sumber daya telah dipindahkan sementara ke URI yang berbeda, tetapi permintaan di masa depan harus tetap menggunakan URI asli.
+- 304 Not Modified: Menunjukkan bahwa sumber daya tidak telah diubah sejak permintaan terakhir, memungkinkan klien untuk menggunakan data yang disimpan di cache.
+4xx: Client Error Responses
+
+- 400 Bad Request: Server tidak dapat memahami permintaan karena sintaks yang tidak valid.
+- 401 Unauthorized: Autentikasi diperlukan dan telah gagal atau belum diberikan.
+- 403 Forbidden: Server memahami permintaan tetapi menolak untuk mengizinkannya.
+- 404 Not Found: Sumber daya yang diminta tidak dapat ditemukan di server.
+5xx: Server Error Responses
+
+- 500 Internal Server Error: Pesan kesalahan umum yang menunjukkan bahwa kondisi tak terduga telah terjadi di server.
+- 503 Service Unavailable: Server saat ini tidak dapat menangani permintaan karena kelebihan beban sementara atau pemeliharaan server.
+- 504 Gateway Timeout: Server bertindak sebagai gateway dan tidak menerima respons tepat waktu dari server upstream.
+
+References : https://developer.mozilla.org/en-US/docs/Web/HTTP/Status 
+2. - @JsonInclude
+Anotasi ini menentukan kapan properti dari sebuah kelas harus disertakan dalam serialisasi JSON. Ini dapat digunakan untuk mengecualikan nilai null atau koleksi kosong, yang membantu mengurangi ukuran payload dan meningkatkan kejelasan.
+
+- @JsonFormat
+Digunakan untuk menentukan bagaimana tanggal dan waktu diformat selama serialisasi dan deserialisasi. Ini memungkinkan pengembang untuk mendefinisikan format kustom untuk bidang tanggal-waktu, memastikan konsistensi di berbagai sistem.
+
+- @JsonIgnore
+Anotasi ini digunakan untuk mencegah properti tertentu dari diserialisasi atau deserialisasi. Ini berguna untuk menyembunyikan informasi sensitif atau bidang yang tidak relevan untuk operasi tertentu.
+
+references : https://medium.com/@bubu.tripathy/json-serialization-and-deserialization-in-java-2a3f08266b70 
+
+3. Tipe RequestBody
+- application/xml: Digunakan saat mengirimkan data XML. Cocok saat bekerja dengan sistem yang lebih memilih XML daripada JSON atau saat mengintegrasikan dengan sistem lama.
+- application/x-www-form-urlencoded: Umumnya digunakan untuk pengiriman formulir dalam aplikasi web. Sesuai untuk pasangan kunci-nilai sederhana tanpa struktur yang kompleks.
+
+Tipe ResponseBody
+- text/plain: Digunakan untuk respons teks biasa. Ideal untuk API yang mengembalikan pesan teks sederhana atau log.
+- multipart/form-data: Berguna untuk mengunggah file bersama dengan data lainnya. Cocok ketika klien perlu mengirim file bersamaan dengan data formulir.
+
+references : https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types 
+
+4. @ControllerAdvice
+- Fungsi: Menangani pengecualian secara global di seluruh pengontrol (controllers).
+- Penggunaan: Mengizinkan definisi logika penanganan pengecualian yang dapat diterapkan ke beberapa pengontrol.
+
+@RestControllerAdvice
+- Fungsi: Sejenis @ControllerAdvice yang secara otomatis mengikat respons ke dalam tubuh respons web (JSON).
+- Penggunaan: Dirancang khusus untuk API RESTful, mempermudah penanganan pengecualian dan pengembalian data.
+
+references : https://codersee.com/controlleradvice-vs-restcontrolleradvice/ 
+
+5. WebClient adalah objek kelas yang disediakan oleh Spring Framework untuk melakukan permintaan HTTP dengan cara yang non-blocking dan reaktif. Fungsi utama dari WebClient adalah untuk mempermudah komunikasi dengan API RESTful, memungkinkan pengembang untuk membuat permintaan GET, POST, PUT, DELETE, dan lain-lain secara efisien dan asinkron. WebClient mendukung pengelolaan respons, pengolahan data dalam format JSON dan XML, serta pengaturan header dan parameter yang diperlukan dalam permintaan HTTP.
+
+WebClient dirancang untuk memberikan API yang lebih modern dan fungsional dibandingkan dengan RestTemplate, yang merupakan kelas yang lebih tua dan bersifat blocking. Kelebihan WebClient terletak pada kemampuannya untuk menangani permintaan secara non-blocking, yang sangat berguna dalam aplikasi dengan permintaan tinggi atau ketika menggunakan arsitektur mikroservis.
+
+Alternatif lain yang dapat digunakan selain WebClient adalah RestTemplate, yang merupakan solusi lebih tradisional dan blocking. Meskipun RestTemplate lebih mudah dipahami dan digunakan, ia tidak mendukung pemrograman reaktif, sehingga kurang cocok untuk aplikasi yang membutuhkan skalabilitas tinggi atau responsif terhadap permintaan. Pilihan lain yang juga dapat digunakan adalah RestClient, yang diperkenalkan dalam Spring Framework 6.1. RestClient menawarkan API yang bersih dan fungsional, mirip dengan WebClient, tetapi bersifat blocking, membuatnya lebih sesuai untuk aplikasi Spring MVC yang tidak menggunakan pemrograman reaktif.
+
+references : https://www.infoworld.com/article/2252984/when-to-use-webclient-vs-httpclient-vs-httpwebrequest.html , https://digma.ai/restclient-vs-webclient-vs-resttemplate/ 
+</details>

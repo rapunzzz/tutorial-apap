@@ -8,5 +8,5 @@ import apap.tutorial.manpromanpro.model.Pekerja;
 
 @Repository
 public interface PekerjaDb extends JpaRepository<Pekerja, Long> {
-    List<Pekerja> findBytanggalDihapusIsNull(Sort sort);
+    List<Pekerja> findByDeletedAtIsNull(Sort sort);
 }

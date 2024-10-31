@@ -36,10 +36,10 @@ public class ManpromanproApplication {
 			proyek.setDeskripsi(fakeProyek.quote());
 			proyek.setTanggalMulai(fakeDate.past(2, TimeUnit.DAYS));
 			proyek.setTanggalSelesai(fakeDate.future(2, TimeUnit.DAYS));
-			proyek.setTanggalDibentuk(new Date());
-			proyek.setTanggalDiubah(new Date());
+			proyek.setCreatedAt(new Date());
+			proyek.setUpdatedAt(new Date());
 			proyek.setStatus("STARTED");
-			proyek.setTanggalDihapus(null);
+			proyek.setDeletedAt(null);
 
 			var developer = new Developer();
 			var fakeDeveloper = faker.name();
@@ -49,8 +49,8 @@ public class ManpromanproApplication {
 			developer.setAlamat(fakeAddress.fullAddress());
 			developer.setTanggalBerdiri(fakeDate.birthday());
 			developer.setEmail("fakedeveloper@test.com");
-			developer.setTanggalDibentuk(new Date());
-			developer.setTanggalDiubah(new Date());
+			developer.setCreatedAt(new Date());
+			developer.setUpdatedAt(new Date());
 
 			var newDeveloper = developerService.addDeveloper(developer);
 			proyek.setDeveloper(newDeveloper);

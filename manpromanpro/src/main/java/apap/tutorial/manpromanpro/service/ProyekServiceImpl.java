@@ -26,7 +26,7 @@ public class ProyekServiceImpl implements ProyekService {
     public List<Proyek> getAllProyek() {
         Sort.Order orderByNama = Sort.Order.by("nama").ignoreCase();
         Sort sort = Sort.by(orderByNama);
-        return proyekDb.findBytanggalDihapusIsNull(sort);
+        return proyekDb.findByDeletedAtIsNull(sort);
     }
 
     @Override
@@ -34,11 +34,11 @@ public class ProyekServiceImpl implements ProyekService {
         Sort.Order orderByNama = Sort.Order.by("nama").ignoreCase();
         Sort sort = Sort.by(orderByNama);
         if (status.isEmpty()) {
-            return proyekDb.findByNamaContainingIgnoreCaseAndTanggalDihapusIsNull(nama, sort);
+            return proyekDb.findByNamaContainingIgnoreCaseAndDeletedAtIsNull(nama, sort);
         } else if (nama.isEmpty()) {
-            return proyekDb.findByStatusIgnoreCaseAndTanggalDihapusIsNull(status, sort);
+            return proyekDb.findByStatusIgnoreCaseAndDeletedAtIsNull(status, sort);
         } else {
-            return proyekDb.findByNamaContainingIgnoreCaseAndStatusIgnoreCaseAndTanggalDihapusIsNull(nama, status, sort);
+            return proyekDb.findByNamaContainingIgnoreCaseAndStatusIgnoreCaseAndDeletedAtIsNull(nama, status, sort);
         }
     }
 
@@ -62,7 +62,7 @@ public class ProyekServiceImpl implements ProyekService {
             getProyek.setTanggalSelesai(proyek.getTanggalSelesai());
             getProyek.setStatus(proyek.getStatus());
             getProyek.setDeveloper(proyek.getDeveloper());
-            getProyek.setTanggalDiubah(new Date());
+            getProyek.setUpdatedAt(new Date());
             getProyek.setListPekerja(proyek.getListPekerja());
             proyekDb.save(getProyek);
 
@@ -74,7 +74,7 @@ public class ProyekServiceImpl implements ProyekService {
 
     @Override
     public void deleteProyek(Proyek proyek) {
-        proyek.setTanggalDihapus(new Date());
+        proyek.setDeletedAt(new Date());
         proyekDb.save(proyek);
         // proyekDb.delete(proyek);
     }

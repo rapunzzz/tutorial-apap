@@ -27,7 +27,7 @@
                     <a class="nav-link" th:classappend="${activeTab == 'home'} ? 'active' : 'text-muted'"  th:href="@{/}">Beranda</a>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link" th:classappend="${activeTab == 'pekerja'} ? 'active' : 'text-muted'" th:href="@{/pekerja/viewall}">Pekerja</a>
+                    <a class="nav-link" th:classappend="${activeTab == 'pekerja'} ? 'active' : 'text-muted'" th:href="@{/pekerja/rest/viewall}">Pekerja</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:classappend="${activeTab == 'developer'} ? 'active' : 'text-muted'" th:href="@{/developer/viewall}">Developer</a>

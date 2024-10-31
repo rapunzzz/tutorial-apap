@@ -1,20 +1,19 @@
-package apap.tutorial.manpromanpro.dto.request;
-import apap.tutorial.manpromanpro.model.Developer;
-import apap.tutorial.manpromanpro.model.Pekerja;
+package apap.tutorial.manpromanpro.restdto.request;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import jakarta.validation.constraints.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AddProyekRequestDTO {
+public class AddProyekRequestRestDTO {
     @NotBlank(message = "Nama proyek tidak boleh kosong")
     private String nama;
 
@@ -33,16 +32,8 @@ public class AddProyekRequestDTO {
     private String status;
 
     @NotNull(message = "Pekerja proyek tidak boleh kosong")
-    private List<Pekerja> listPekerja;
+    private List<Long> listPekerja;
 
-    private Developer developer;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date CreatedAt;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date UpdatedAt;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date DeletedAt;
+    @NotNull(message = "Developer tidak boleh kosong")
+    private Long developer;
 }

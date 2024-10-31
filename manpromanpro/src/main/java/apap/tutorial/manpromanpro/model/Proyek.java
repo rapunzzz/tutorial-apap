@@ -4,25 +4,29 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -30,6 +34,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 @AllArgsConstructor
 @Entity
 @Table(name = "proyek")
+@SQLDelete(sql = "UPDATE proyek SET deleted_at = NOW() WHERE id=?")
+@SQLRestriction("deleted_at IS NULL")
 public class Proyek {
     @Id
     private UUID id = UUID.randomUUID();
@@ -62,28 +68,22 @@ public class Proyek {
     @JoinColumn(name = "id_developer", referencedColumnName = "id")
     private Developer developer;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @CreationTimestamp
-    @NotNull
-    @Column(name = "tanggal_dibentuk", nullable = false)
-    private Date tanggalDibentuk;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @UpdateTimestamp
-    @NotNull
-    @Column(name = "tanggal_diubah", nullable = false)
-    private Date tanggalDiubah;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "tanggal_dihapus", nullable = true)
-    private Date tanggalDihapus;
-
     @ManyToMany
-    @JoinTable(
-        name = "pekerja_proyek",
-        joinColumns = @JoinColumn(name = "id_proyek"),
-        inverseJoinColumns = @JoinColumn(name = "id_pekerja")
-    )
-    private List<Pekerja> listPekerja;
-}
+    @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
+            inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
+    @SQLRestriction("deleted_at IS NULL")
+    List<Pekerja> listPekerja;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false)
+    private Date updatedAt;
+
+    @Column(name = "deleted_at")
+    private Date deletedAt;
+}

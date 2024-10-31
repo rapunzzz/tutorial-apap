@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.model.Developer;
-import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.DeveloperDb;
 
 @Service
@@ -43,7 +42,7 @@ public class DeveloperServiceImpl implements DeveloperService {
             getDeveloper.setAlamat(developer.getAlamat());
             getDeveloper.setTanggalBerdiri(developer.getTanggalBerdiri());
             getDeveloper.setEmail(developer.getEmail());
-            getDeveloper.setTanggalDiubah(new Date());
+            getDeveloper.setUpdatedAt(new Date());
 
             developerDb.save(getDeveloper);
 

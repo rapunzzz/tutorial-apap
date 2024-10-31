@@ -1,30 +1,24 @@
 package apap.tutorial.manpromanpro.model;
 
-import java.util.Date;
-import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.CascadeType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "developer")
 public class Developer {
@@ -41,7 +35,6 @@ public class Developer {
     @Column(name = "alamat", columnDefinition = "TEXT", nullable = false)
     private String alamat;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @Column(name = "tanggal_berdiri", columnDefinition = "DATE", nullable = false)
     private Date tanggalBerdiri;
@@ -51,19 +44,17 @@ public class Developer {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @CreationTimestamp
-    @NotNull
-    @Column(name = "tanggal_dibentuk", nullable = false)
-    private Date tanggalDibentuk;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @UpdateTimestamp
-    @NotNull
-    @Column(name = "tanggal_diubah", nullable = false)
-    private Date tanggalDiubah;
-
     @OneToMany(mappedBy = "developer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @SQLRestriction("deleted_at IS NULL")
     private List<Proyek> listProyek;
-}
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private Date createdAt;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = false)
+    private Date updatedAt;
+}
