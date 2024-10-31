@@ -1,10 +1,8 @@
 package apap.tutorial.manpromanpro.controller;
 
 import apap.tutorial.manpromanpro.model.Developer;
-import apap.tutorial.manpromanpro.model.Proyek;
 
 import java.util.Date;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,8 +43,8 @@ public class DeveloperController {
         developer.setAlamat(developerDTO.getAlamat());
         developer.setTanggalBerdiri(developerDTO.getTanggalBerdiri());
         developer.setEmail(developerDTO.getEmail());
-        developer.setTanggalDibentuk(new Date());
-        developer.setTanggalDiubah(new Date());
+        developer.setCreatedAt(new Date());
+        developer.setUpdatedAt(new Date());
         developerService.addDeveloper(developer);
 
         model.addAttribute("responseMessage",
@@ -83,7 +81,7 @@ public class DeveloperController {
         developerDTO.setAlamat(developer.getAlamat());
         developerDTO.setTanggalBerdiri(developer.getTanggalBerdiri());
         developerDTO.setEmail(developer.getEmail());
-        developerDTO.setTanggalDiubah(developer.getTanggalDiubah());
+        developerDTO.setUpdatedAt(developer.getUpdatedAt());
 
         model.addAttribute("developerDTO", developerDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
@@ -100,7 +98,7 @@ public class DeveloperController {
         developerFromDTO.setAlamat(developerDTO.getAlamat());
         developerFromDTO.setTanggalBerdiri(developerDTO.getTanggalBerdiri());
         developerFromDTO.setEmail(developerDTO.getEmail());
-        developerFromDTO.setTanggalDiubah(developerDTO.getTanggalDiubah());
+        developerFromDTO.setUpdatedAt(developerDTO.getUpdatedAt());
         var developer = developerService.updateDeveloper(developerFromDTO);
 
         model.addAttribute("responseMessage",

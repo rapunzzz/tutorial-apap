@@ -10,8 +10,8 @@ import apap.tutorial.manpromanpro.model.Proyek;
 
 @Repository
 public interface ProyekDb extends JpaRepository<Proyek, UUID> {
-    List<Proyek> findBytanggalDihapusIsNull(Sort sort);
-    List<Proyek> findByNamaContainingIgnoreCaseAndTanggalDihapusIsNull(String nama, Sort sort);
-    List<Proyek> findByStatusIgnoreCaseAndTanggalDihapusIsNull(String status, Sort sort);
-    List<Proyek> findByNamaContainingIgnoreCaseAndStatusIgnoreCaseAndTanggalDihapusIsNull(String nama, String status, Sort sort);
+    List<Proyek> findByDeletedAtIsNull(Sort sort);
+    List<Proyek> findByNamaContainingIgnoreCaseAndDeletedAtIsNull(String nama, Sort sort);
+    List<Proyek> findByStatusIgnoreCaseAndDeletedAtIsNull(String status, Sort sort);
+    List<Proyek> findByNamaContainingIgnoreCaseAndStatusIgnoreCaseAndDeletedAtIsNull(String nama, String status, Sort sort);
 }

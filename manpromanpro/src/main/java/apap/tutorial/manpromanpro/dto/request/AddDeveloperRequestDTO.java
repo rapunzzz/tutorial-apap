@@ -17,7 +17,7 @@ public class AddDeveloperRequestDTO {
     private Date tanggalBerdiri;
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date tanggalDibentuk;
+    private Date CreatedAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date tanggalDiubah;
+    private Date UpdatedAt;
 }

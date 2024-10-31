@@ -20,6 +20,8 @@ import apap.tutorial.manpromanpro.dto.request.AddProyekRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
 import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
+import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
+import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 import apap.tutorial.manpromanpro.service.DeveloperService;
 import apap.tutorial.manpromanpro.service.PekerjaService;
 import apap.tutorial.manpromanpro.service.ProyekService;
@@ -80,9 +82,9 @@ public class ProyekController {
         proyek.setStatus(proyekDTO.getStatus());
         proyek.setListPekerja(proyekDTO.getListPekerja());
         proyek.setDeveloper(proyekDTO.getDeveloper());
-        proyek.setTanggalDibentuk(new Date());
-        proyek.setTanggalDiubah(new Date());
-        proyek.setTanggalDihapus(null);
+        proyek.setCreatedAt(new Date());
+        proyek.setUpdatedAt(new Date());
+        proyek.setDeletedAt(null);
 
         proyekService.addProyek(proyek);
         
@@ -162,7 +164,7 @@ public class ProyekController {
         proyekDTO.setStatus(proyek.getStatus());
         proyekDTO.setListPekerja(proyek.getListPekerja());
         proyekDTO.setDeveloper(proyek.getDeveloper());
-        proyekDTO.setTanggalDiubah(proyek.getTanggalDiubah());
+        proyekDTO.setUpdatedAt(proyek.getUpdatedAt());
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
@@ -190,7 +192,7 @@ public class ProyekController {
         proyekFromDTO.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyekFromDTO.setStatus(proyekDTO.getStatus());
         proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
-        proyekFromDTO.setTanggalDiubah(proyekDTO.getTanggalDiubah());
+        proyekFromDTO.setUpdatedAt(proyekDTO.getUpdatedAt());
         proyekFromDTO.setListPekerja(proyekDTO.getListPekerja());
         var proyek = proyekService.updateProyek(proyekFromDTO);
 

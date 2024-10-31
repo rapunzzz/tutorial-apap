@@ -1,7 +1,5 @@
 package apap.tutorial.manpromanpro.dto.request;
 
-import java.util.UUID;
-
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

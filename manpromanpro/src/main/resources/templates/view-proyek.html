@@ -54,13 +54,13 @@
                 <div class="row my-3">
                     <p class="card-text fw-bold col-sm-3">Waktu Dibentuk</p>
                     <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
-                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.tanggalDibentuk, 'dd MMMM yyyy HH.mm')}"></p>
+                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.CreatedAt, 'dd MMMM yyyy HH.mm')}"></p>
                 </div>
 
                 <div class="row my-3">
                     <p class="card-text fw-bold col-sm-3">Terakhir Diubah</p>
                     <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
-                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.tanggalDiubah, 'dd MMMM yyyy HH.mm')}"></p>
+                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.UpdatedAt, 'dd MMMM yyyy HH.mm')}"></p>
                 </div>
 
                 <div th:if="${proyek.listPekerja != null}">
