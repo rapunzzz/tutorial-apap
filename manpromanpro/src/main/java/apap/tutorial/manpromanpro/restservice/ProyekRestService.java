@@ -13,4 +13,5 @@ public interface ProyekRestService {
     ProyekResponseDTO getProyekById(UUID idProyek);
     ProyekResponseDTO updateProyekRest(UpdateProyekRequestRestDTO ProyekDTO);
     void deleteProyekRest(UUID idProyek);
+    public List<ProyekResponseDTO> findProyekByNama(String nama);
 }   
