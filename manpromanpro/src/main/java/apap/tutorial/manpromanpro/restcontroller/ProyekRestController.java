@@ -1,12 +1,8 @@
 package apap.tutorial.manpromanpro.restcontroller;
 
-import apap.tutorial.manpromanpro.model.Proyek;
-import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.request.AddProyekRequestRestDTO;
-import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.request.UpdateProyekRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
-import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import apap.tutorial.manpromanpro.restservice.ProyekRestService;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,11 +25,9 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,11 +42,11 @@ public class ProyekRestController {
     ProyekRestService proyekRestService;
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> detailProyek(@PathVariable("id") UUID id) {
+    @GetMapping("/{idProyek}")
+    public ResponseEntity<?> detailProyek(@PathVariable("idProyek") UUID idProyek) {
         var baseResponseDTO = new BaseResponseDTO<ProyekResponseDTO>();
 
-        ProyekResponseDTO proyek = proyekRestService.getProyekById(id);
+        ProyekResponseDTO proyek = proyekRestService.getProyekById(idProyek);
         if  (proyek == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
             baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
@@ -101,8 +96,8 @@ public class ProyekRestController {
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}/update")
-    public ResponseEntity<?> updateProyek(@PathVariable UUID id, 
+    @PutMapping("/{idProyek}/update")
+    public ResponseEntity<?> updateProyek(@PathVariable UUID idProyek, 
                                         @Valid @RequestBody UpdateProyekRequestRestDTO proyekDTO,
                                         BindingResult bindingResult) {
         var baseResponseDTO = new BaseResponseDTO<ProyekResponseDTO>();
@@ -119,7 +114,7 @@ public class ProyekRestController {
         }
 
         // Set the ID from the path variable to the DTO (since it's not sent in the body)
-        proyekDTO.setId(id);
+        proyekDTO.setId(idProyek);
 
         // Call the service to update the project
         ProyekResponseDTO proyek = proyekRestService.updateProyekRest(proyekDTO);
@@ -177,5 +172,24 @@ public class ProyekRestController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> searchProyek(@RequestParam String nama) {
+        var baseResponseDTO = new BaseResponseDTO<List<ProyekResponseDTO>>();
+
+        List<ProyekResponseDTO> proyek = proyekRestService.findProyekByNama(nama);
+        if  (proyek == null) {
+            baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
+            baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
+            baseResponseDTO.setTimestamp(new Date());
+            return new ResponseEntity<>(baseResponseDTO, HttpStatus.NOT_FOUND);
+        }
+
+        baseResponseDTO.setStatus(HttpStatus.OK.value());
+        baseResponseDTO.setData(proyek);
+        baseResponseDTO.setMessage(String.format("Proyek dengan berisi nama %s berhasil ditemukan", nama));
+        baseResponseDTO.setTimestamp(new Date());
+
+        return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
+    }
 
 }

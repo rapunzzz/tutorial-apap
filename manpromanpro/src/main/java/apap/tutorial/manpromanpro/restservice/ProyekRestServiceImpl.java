@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.model.Developer;
@@ -64,6 +65,20 @@ public class ProyekRestServiceImpl implements ProyekRestService{
     @Override
     public List<ProyekResponseDTO> getAllProyek() {
         var listProyek = proyekDb.findAll();
+        var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
+        listProyek.forEach(proyek -> {
+            var proyekResponseDTO = proyekToProyekResponseDTO(proyek);
+            listProyekResponseDTO.add(proyekResponseDTO);
+        });
+
+        return listProyekResponseDTO;
+    }
+
+    @Override
+    public List<ProyekResponseDTO> findProyekByNama(String nama) {
+        Sort.Order orderByNama = Sort.Order.by("nama").ignoreCase();
+        Sort sort = Sort.by(orderByNama);
+        var listProyek = proyekDb.findByNamaContainingIgnoreCaseAndDeletedAtIsNull(nama, sort);
         var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
         listProyek.forEach(proyek -> {
             var proyekResponseDTO = proyekToProyekResponseDTO(proyek);

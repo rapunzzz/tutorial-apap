@@ -182,7 +182,7 @@ Referensi: https://www.niagahoster.co.id/blog/error-404-not-found-pada-website/ 
 
 <details>
 <summary>
-<h2>Tutorial 4</h2>
+<h2>Tutorial 5</h2>
 </summary>
 Pertanyaan
 1. Sebelumnya kita sudah mengetahui pada saat mengirimkan sebuah HTTP Response perlu memasukkan kode status yang berperan memberikan informasi dari response yang akan diterima. Untuk kode status sendiri dikelompokkan menjadi 5 jenis yaitu kode status dengan awalan 1xx, 2xx, 3xx, 4xx, dan 5xx. Coba jelaskan arti dari masing-masing kode status (selain 2xx) dan kapan kita harus menggunakan kode status tersebut!.
@@ -254,4 +254,115 @@ WebClient dirancang untuk memberikan API yang lebih modern dan fungsional diband
 Alternatif lain yang dapat digunakan selain WebClient adalah RestTemplate, yang merupakan solusi lebih tradisional dan blocking. Meskipun RestTemplate lebih mudah dipahami dan digunakan, ia tidak mendukung pemrograman reaktif, sehingga kurang cocok untuk aplikasi yang membutuhkan skalabilitas tinggi atau responsif terhadap permintaan. Pilihan lain yang juga dapat digunakan adalah RestClient, yang diperkenalkan dalam Spring Framework 6.1. RestClient menawarkan API yang bersih dan fungsional, mirip dengan WebClient, tetapi bersifat blocking, membuatnya lebih sesuai untuk aplikasi Spring MVC yang tidak menggunakan pemrograman reaktif.
 
 references : https://www.infoworld.com/article/2252984/when-to-use-webclient-vs-httpclient-vs-httpwebrequest.html , https://digma.ai/restclient-vs-webclient-vs-resttemplate/ 
+</details>
+
+<details>
+<summary>
+<h2>Tutorial 6</h2>
+</summary>
+Pertanyaan
+1. Perhatikan apa yang terjadi pada file index.html pada branch feat/tutorial-6-advancedgit-1. Apa yang terjadi setelah git cherry-pick dilakukan? Apakah kita bisa melakukan cherrypick tanpa harus melakukan commit?
+2. Apa yang menjadi penyebab dari CONFLICT tersebut?
+3. Jelaskan perbedaan dari "rebase –continue", "rebase –skip", dan "rebase –abort"!
+4. Apa perbedaan Git Merge dengan Git Rebase? Buatlah/carilah ilustrasi yang dapat menggambarkan perbedaanya! Anda bisa menggunakan commit history (git log –oneline) Anda setelah melakukan rebase.
+5. Mengapa hal pada langkah no 4 bisa terjadi? Mengapa git stash menjadi solusinya?
+6. Sebutkan dan jelaskan tiga tipe dari Git Reset!
+7. Apa itu git revert? Apa perbedaannya dengan git reset?
+8. Buatlah grafik yang menggambarkan alur commit pada bagian Git Flow and Branching ini serta jelaskan! Grafik dapat berupa tulis tangan maupun menggunakan software.
+9. Apa kegunaan dari langkah di atas?
+10. 
+11. Apa itu Assertions dalam JMeter? Sebutkan contoh 3 Assertions dan kegunaannya!
+12. 
+13. Gunakan angka 1000 untuk Number of Threads dan 100 untuk Ramp-up period. Jalankan Test Plan dengan konfigurasi tersebut. Kemudian, perhatikan Summary Report, View Result Tree, Graph Result, dan Assertion Result. Buatlah penjelasan minimal 2 paragraf untuk menjelaskan temuan menarik kalian terhadap hasil-hasil tersebut. Sertakan screenshot dari keempat result tersebut. Sertakan juga info mengenai prosesor, RAM, dan penggunaan hardisk HDD atau SSD dari perangkat Anda. (Jika perangkat Anda tidak kuat dengan angka konfigurasi tersebut, silakan turunkan angkanya).
+14. Sembari menjalankan Test Plan, perhatikan pergerakan grafik pada JConsole. Buatlah penjelasan minimal 2 paragraf untuk menjelaskan temuan menarik kalian terhadap hasil-hasil tersebut. Sertakan screenshot dari grafik-grafik tersebut.
+15. Apa itu Load Testing? Buatlah kesimpulan dari pengerjaan tutorial JMeter & JConsole ini.
+Jawaban
+1. Branch yang sedang aktif akan pick commit yang dituju dari branch tertentu. Umumnya cherry-pick akan menambahkan commit baru di branch aktif tersebut, tapi ada cara untuk melakukan cherry pick tanpa membuat commit baru di branch aktif itu. Option atau command untuk melakukan tanpa commit yaitu dengan option ```--no-commit```. Option ini akan mengambil perubahan dari commit yang dituju dan menambahkannya ke working directory serta staging area branch aktif, tanpa membuat commit baru secara otomatis.
+Referensi: https://www.atlassian.com/git/tutorials/cherry-pick
+
+2. Dua branch yang sedang mengubah file yang sama dan dilakukannya merge akan menjadikan conflict karena perbedaan isi dari file tersebut. Dalam situasi ini, Git tidak bisa secara otomatis menentukan perubahan mana yang harus dipertahankan karena adanya perbedaan konten atau pengeditan yang tumpang tindih. Hal ini biasa disebut sebagai overwrite conflict atau merge conflict.
+Referensi: https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts
+
+3. ```rebase --continue``` melanjutkan rebase setelah menyelesaikan konflik. ```rebase --skip``` melewati commit yang bermasalah tanpa memasukkan perubahan tersebut. ```rebase --abort``` membatalkan rebase dan mengembalikan branch ke kondisi awal sebelum rebase.
+Referensi: https://git-scm.com/docs/git-rebase/2.25.0
+
+4. Git Merge mempertahankan history commit bercabang, menciptakan commit merge yang menunjukkan seluruh history perubahan. Sebaliknya, Git Rebase menyusun ulang commit menjadi history linear. Merge menjaga history lengkap, sementara Rebase menulis ulang history commit.
+
+Perbedaan Git Merge dan Git Rebase
+![alt text](rebase-merge.png)
+
+Referensi: https://www.simplilearn.com/git-rebase-vs-merge-article
+
+5. Git tidak mengizinkan perpindahan branch ketika ada perubahan lokal yang belum disimpan, karena berpotensi menyebabkan konflik antara perubahan yang belum di-commit dengan isi branch tujuan.Git stash berfungsi untuk menyimpan perubahan sementara tanpa melakukan commit. git stash akan menyimpan perubahan tersebut di area penyimpanan sementara (stash) dan mengembalikan status branch ke keadaan bersih (clean working directory). Setelah itu, pengguna bisa berpindah branch dengan aman.
+Referensi: https://www.atlassian.com/git/tutorials/saving-changes/git-stash
+
+6. ```Git Reset Soft``` : Memindahkan HEAD satu commit ke belakang (ke commit sebelumnya). Perubahan dari commit yang direset tetap ada di staging area. ```Git Reset Mixed``` : Memindahkan HEAD satu commit ke belakang. Perubahan dari commit yang direset tidak ada lagi di staging area, tetapi tetap ada di working directory. ```Git Reset Hard``` : Memindahkan HEAD satu commit ke belakang dan menghapus semua perubahan dari commit yang direset. Ini mengembalikan repositori ke keadaan persis seperti commit sebelumnya, dan semua perubahan yang tidak di-commit akan hilang.
+Referensi: https://www.gitkraken.com/learn/git/git-reset
+
+7. ```git revert``` adalah perintah untuk membatalkan perubahan dari commit tertentu dengan membuat commit baru yang membalikkan perubahan tersebut. Ini menjaga riwayat commit tetap utuh.
+Perbedaan dengan git reset:
+
+```git revert```: Membuat commit baru untuk membatalkan perubahan tanpa mengubah riwayat commit. Aman digunakan pada cabang publik.
+```git reset```: Mengubah posisi HEAD ke commit tertentu dan bisa menghapus riwayat commit. Lebih cocok untuk cabang pribadi atau untuk membatalkan perubahan sebelum commit.
+Referensi: https://www.atlassian.com/git/tutorials/resetting-checking-out-and-reverting#:~:text=You%20can%20also%20think%20of,lost%20during%20the%20revert%20operation. 
+
+8. ![alt text](gitflow.png)
+
+Proses dimulai pada branch main dengan commit pertama. Kemudian, branch development dibuat dan file base.html ditambahkan. Dari branch development, dibuat branch feature-a di mana pengeditan pada base.html dilakukan. Setelah itu, branch feature-a digabungkan ke dalam branch development. Selanjutnya, branch feature-b dibuat dari branch development, dan pengeditan pada base.html dilakukan di sini. Saat melakukan rebase feature-b ke branch development, terjadi konflik yang perlu diselesaikan. Setelah konflik berhasil diatasi, branch feature-b berhasil digabungkan kembali ke branch development.
+
+Referensi: https://www.gitkraken.com/learn/git/git-flow
+
+9. HTTP Header Manager digunakan untuk mengelola header dalam permintaan HTTP. Dengan menambahkan header "content-type" dan mengatur nilainya ke "application/json," kita memberi tahu server bahwa konten yang akan dikirim dalam permintaan adalah dalam format JSON. Ini penting agar server dapat memproses data dengan benar sesuai dengan format yang diharapkan.
+Referensi: https://www.perfmatrix.com/jmeter-http-header-manager/
+
+10. JSON Extractor adalah alat yang digunakan untuk mengambil data dari respons JSON dan menyimpannya dalam variabel. Fungsinya adalah untuk mengekstrak informasi yang kita butuhkan dari respons tersebut. Dalam tutorial ini, kita menggunakan JSON Extractor untuk mengambil nilai id dari respons JSON pertama dan menyimpannya dalam variabel bernama id.
+
+11. Assertions dalam JMeter adalah elemen yang digunakan untuk memverifikasi bahwa respons dari server sesuai dengan ekspektasi yang diinginkan, membantu memastikan keakuratan hasil tes. Berikut tiga contoh assertions beserta kegunaannya:
+
+- JSON Assertion: Digunakan untuk memverifikasi data dalam format JSON yang diterima dari server. Assertion ini memungkinkan kita untuk memastikan bahwa respons JSON berisi kunci dan nilai tertentu sesuai dengan yang diharapkan. Misalnya, kita bisa memeriksa apakah elemen JSON tertentu ada atau memiliki nilai yang benar.
+
+- Response Assertion: Berguna untuk memverifikasi pola atau nilai tertentu dalam respons dari server. Kita bisa memastikan bahwa respons mengandung teks atau nilai yang spesifik, seperti pesan tertentu. Assertion ini membantu untuk mengecek keakuratan isi respons server, seperti memastikan teks tertentu ada di halaman.
+
+- HTML Assertion: Digunakan untuk memeriksa sintaks HTML dari respons server. Assertion ini memungkinkan kita memverifikasi apakah HTML yang diterima benar secara sintaksis. Ini berguna untuk memastikan bahwa server mengembalikan HTML yang valid, yang bisa membantu dalam menemukan error jika halaman tidak dirender dengan benar.
+Referensi: https://www.geeksforgeeks.org/assertions-in-jmeter/
+
+12. Number of Threads dalam JMeter menentukan jumlah pengguna virtual (atau thread) yang akan menjalankan permintaan secara bersamaan. Ramp-up Period adalah waktu yang diperlukan untuk menjalankan semua thread tersebut.
+
+Hubungan antara keduanya adalah bahwa ramp-up period menentukan seberapa cepat thread akan dimulai. Misalnya, jika kita memiliki 10 threads dan ramp-up period 10 detik, JMeter akan memulai 1 thread per detik sampai semua 10 thread aktif.
+
+13. 
+Summary Report
+![Summary Report](https://i.imgur.com/ErvQXcm.png) 
+Dari Summary Report, terlihat bahwa semua 1000 request yang dijalankan berhasil, namun terdapat variasi yang cukup signifikan dalam performa. Untuk beberapa operasi, seperti "Search Proyek by Nama" dan "Random Request", terdapat persentase error yang cukup tinggi, masing-masing 22,90% dan 51,20%. Hal ini mengindikasikan adanya masalah pada sistem dalam menangani beban yang tinggi.
+
+Graph Result
+![Graph Result](https://i.imgur.com/7VrQUrP.png) 
+Secara keseluruhan, grafik ini menggambarkan masalah skalabilitas dan ketidakstabilan dalam sistem. Semakin banyak request yang dijalankan, semakin buruk performa sistem, dengan fluktuasi throughput yang signifikan dan variasi waktu respons yang tinggi. Hal ini mengindikasikan adanya kebutuhan untuk mengoptimalisasi sistem agar dapat menangani beban yang lebih tinggi secara konsisten.
+Assertion Result
+![Assertion Result](https://i.imgur.com/awEKGKb.png) 
+
+View Result Tree
+![View Result Tree](https://i.imgur.com/8x7sBo2.png) 
+Analisis pada View Result Tree mengonfirmasi bahwa semua request berhasil dengan response code 200, kecuali pada operasi "Random Request" yang mengembalikan campuran response code. Grafik pada Graph Result juga menunjukkan tren peningkatan waktu respons individual seiring bertambahnya jumlah request, serta fluktuasi throughput yang cukup signifikan.
+
+Device Specification
+![Device Specification](https://i.imgur.com/ZeFDusS.png) 
+
+Performance Disk
+![Performance Disk](https://i.imgur.com/RlnZXKr.png) 
+
+14. 
+Test Jconsole At Peak
+![Test Jconsole At Peak](https://i.imgur.com/YywoToR.png) 
+Ketika test sedang berjalan, jumlah thread yang digunakan cenderung stabil di sekitar 242 thread. Hal ini menunjukkan bahwa selama proses pengujian, aplikasi membutuhkan sumber daya komputasi yang cukup besar untuk menangani beban kerja yang diberikan oleh test plan. Tingginya jumlah thread yang digunakan mengindikasikan bahwa aplikasi sedang bekerja secara intensif untuk memenuhi kebutuhan pengujian.
+Test Jconsole After Test
+
+![Test Jconsole After Test](https://i.imgur.com/97Ieion.png) 
+Namun, setelah test plan selesai dijalankan terlihat bahwa jumlah thread yang digunakan mengalami penurunan yang cukup signifikan, menjadi hanya 50 thread. Hal ini menunjukkan bahwa aplikasi berhasil melepaskan sumber daya thread yang tidak lagi dibutuhkan setelah pengujian selesai. Penurunan jumlah thread ini mengindikasikan bahwa aplikasi memiliki kemampuan yang baik dalam mengelola sumber daya komputasi secara efisien. Aplikasi dapat beradaptasi dengan beban kerja yang berubah-ubah, mengalokasikan sumber daya yang dibutuhkan selama pengujian, dan kemudian melepaskan kembali sumber daya yang tidak lagi diperlukan.
+
+Temuan ini sangat penting karena menunjukkan bahwa aplikasi tidak hanya mampu menangani beban kerja yang berat selama pengujian, tetapi juga memiliki mekanisme yang efektif dalam mengelola sumber daya komputasi. Hal ini dapat berdampak positif pada performa dan efisiensi aplikasi secara keseluruhan.
+
+15. Load Testing adalah sebuah teknik pengujian perangkat lunak yang bertujuan untuk mengetahui bagaimana suatu aplikasi atau sistem akan berfungsi di bawah beban kerja yang diharapkan. Tujuan utama dari load testing adalah untuk mengidentifikasi batasan atau titik di mana aplikasi atau sistem akan mulai mengalami masalah kinerja, seperti penurunan kecepatan respons, error, atau bahkan kegagalan total.
+
+Berdasarkan hasil pengujian menggunakan JMeter dan JConsole, dapat disimpulkan bahwa aplikasi dapat menangani beban kerja yang cukup tinggi, namun membutuhkan sumber daya komputasi yang signifikan, terlihat dari peningkatan penggunaan CPU dan memori yang mencapai puncak selama pengujian.
 </details>
