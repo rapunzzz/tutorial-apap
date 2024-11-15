@@ -366,3 +366,56 @@ Temuan ini sangat penting karena menunjukkan bahwa aplikasi tidak hanya mampu me
 
 Berdasarkan hasil pengujian menggunakan JMeter dan JConsole, dapat disimpulkan bahwa aplikasi dapat menangani beban kerja yang cukup tinggi, namun membutuhkan sumber daya komputasi yang signifikan, terlihat dari peningkatan penggunaan CPU dan memori yang mencapai puncak selama pengujian.
 </details>
+
+<details>
+<summary>
+<h2>Tutorial 7</h2>
+</summary>
+Pertanyaan
+1. Jelaskan apa saja maksud dari pilihan konfigurasi pada awal inisialiasi proyek vue!
+2. Apa itu vite? apakah kita dapat menggunakan vue tanpa vite? Jelaskan!
+3. Jelaskan masing-masing fungsi dari assets, components, router, stores, dan view pada proyek aplikasi Vue JS!
+4. Kenapa agar Vue JS dapat mengakses REST API yang ada pada Spring Boot, kalian harus menambahkan konfigurasi CORS terlebih dahulu?
+5. Jelaskan apa kegunaan interface pada typescript dan apa perbedaannya dengan types serta kapan harus menggunakan yang mana!
+
+Jawaban
+1. Ada beberapa pilihan yang perlu kita setting untuk konfigurasi diawal inisialiasi proyek vue yaitu:
+- Project name: menentukan nama yang akan digunakan pada pembuatan project vue dan pada tutorial kali ini bernama manpromanpro-frontend
+- Add Typescript: menambahkan Typescript ke project, pada pilihan ini kita menggunakanannya (YES)
+- Add JSX Support: menambahkan JSX Support compatibility script, pada pilihan ini kita menggunakanannya (YES)
+- Add Vue Router for Single Page Application development: menambahkan Vue Router, pada pilihan ini kita menggunakanannya (YES)
+- Add Pinia for state management: menambahkan Pinia, pada pilihan ini kita menggunakanannya (YES)
+- Add Vitest for Unit Testing: menambahkan Vitest, pada pilihan ini kita tidak menggunakanannya (NO)
+- Add an End-to-End Testing Solution: menambahkan End-to-End, pada pilihan ini kita tidak menggunakanannya (NO)
+- Add Eslint for code quality: menambahkan Eslint, pada pilihan ini kita menggunakanannya (YES)
+- Add Prettier for code formatting: menambahkan Prettier, pada pilihan ini kita menggunakanannya (YES)
+- Add Vue DevTools 7 extension for debugging: menambahkan Vue Devtools, pada pilihan ini kita tidak menggunakanannya (NO)
+
+2. Vite adalah alat build modern untuk pengembangan yang cepat dan efisien, terutama saat bekerja dengan Vue.js. Dibuat oleh Evan You, Vite menggunakan modul ES bawaan dan server yang dioptimalkan untuk memberi pengalaman pengembangan yang lebih lancar dengan hot module replacement (HMR) dan waktu build yang sangat cepat.
+
+Meskipun Vite sangat berguna, kita tetap bisa menggunakan Vue tanpa Vite. Misalnya, kita bisa memasukkan Vue langsung lewat CDN untuk proyek kecil atau menggunakan Vue CLI, alat standar lain untuk membangun proyek Vue yang menawarkan lebih banyak pilihan kustomisasi. Pilihan alat tergantung pada kebutuhan proyek dan preferensi pengembang.
+
+References: https://enterprisevue.dev/blog/vite-vs-vue-cli/ 
+
+3. Dalam aplikasi Vue.js, ada beberapa elemen inti yang memiliki fungsi masing-masing untuk membangun dan mengelola tampilan serta data aplikasi:
+
+Assets: Ini adalah sumber daya statis seperti gambar, stylesheet, dan font yang digunakan di seluruh aplikasi. File ini biasanya disimpan dalam folder /assets, membuatnya mudah diatur dan diakses dari berbagai bagian aplikasi.
+
+Components: Komponen adalah bagian utama dalam aplikasi Vue. Dengan komponen, kita bisa membuat potongan UI yang bisa digunakan ulang. Setiap komponen memiliki logika, template, dan gaya (style) sendiri, yang mempermudah pengelolaan antarmuka kompleks dengan membaginya menjadi bagian-bagian kecil yang mandiri.
+
+Router: Router bertugas mengatur navigasi dalam aplikasi, yaitu menghubungkan URL ke komponen tertentu. Dengan router, aplikasi Vue bisa menjadi aplikasi satu halaman (SPA), di mana pengguna dapat berpindah halaman tanpa perlu refresh.
+
+Stores: Stores, seperti Vuex, adalah tempat penyimpanan data global aplikasi yang bisa diakses oleh semua komponen. Ini mempermudah pengelolaan data yang perlu dibagikan antar komponen, sehingga data tetap konsisten di seluruh aplikasi.
+
+Views: Views adalah komponen yang terkait dengan rute atau halaman tertentu dalam aplikasi. Mereka mewakili layar atau halaman berbeda yang bisa diakses pengguna.
+
+References: https://vuejs.org/guide/essentials/component-basics , https://router.vuejs.org/guide/ , https://vueschool.io/articles/vuejs-tutorials/vuex-the-official-vuejs-store/
+
+4. Karena domain springboot dengan domain pada vue itu berbeda, untuk bisa mengakses website lain atau domain yang berbeda itu ada default rule yaitu cors origin. Dengan mengatur CORS, kita memberi izin kepada Vue untuk mengakses data dari Spring Boot meskipun berbeda domain atau port.
+
+References: Penjelasan Asdos di kelas Asistensi
+
+5. Pada TypeScript, interface digunakan untuk mendefinisikan struktur atau bentuk dari suatu objek, menentukan properti dan metode yang harus diimplementasikan objek tersebut. Interface membantu memastikan kesesuaian struktur dan mendukung fitur seperti declaration merging, sehingga bisa digabungkan untuk tipe yang kompleks. Sementara itu, type lebih fleksibel dan dapat mewakili berbagai jenis tipe, termasuk tipe primitif, union, dan intersection. Perbedaan utama adalah bahwa interface bersifat "terbuka" (dapat diperluas), sedangkan type bersifat "tertutup" (tidak bisa diubah setelah didefinisikan). Biasanya, interface lebih cocok untuk desain berorientasi objek, sementara type lebih pas untuk situasi kompleks dengan union atau intersection. Pilihan antara keduanya bergantung pada kebutuhan spesifik dan preferensi.
+
+references: https://www.typescriptlang.org/play/?#example/types-vs-interfaces , https://www.sitepoint.com/typescript-type-vs-interface/
+</details>

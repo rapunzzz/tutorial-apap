@@ -31,7 +31,6 @@ public class AddProyekRequestRestDTO {
     @NotBlank(message = "Status tidak boleh kosong")
     private String status;
 
-    @NotNull(message = "Pekerja proyek tidak boleh kosong")
     private List<Long> listPekerja;
 
     @NotNull(message = "Developer tidak boleh kosong")
