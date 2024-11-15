@@ -192,4 +192,17 @@ public class ProyekRestController {
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/viewall")
+    public ResponseEntity<BaseResponseDTO<List<ProyekResponseDTO>>> listProyek() {
+        List<ProyekResponseDTO> listProyek = proyekRestService.getAllProyek();
+
+        var baseResponseDTO = new BaseResponseDTO<List<ProyekResponseDTO>>();
+        baseResponseDTO.setStatus(HttpStatus.OK.value());
+        baseResponseDTO.setData(listProyek);
+        baseResponseDTO.setMessage("Listt proyek berhasil diambil");
+        baseResponseDTO.setTimestamp(new Date());
+        return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
+    }
+    
+
 }

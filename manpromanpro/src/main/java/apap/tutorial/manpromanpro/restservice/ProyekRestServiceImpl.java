@@ -51,11 +51,13 @@ public class ProyekRestServiceImpl implements ProyekRestService{
         proyek.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyek.setStatus(proyekDTO.getStatus());
 
-         Set<Pekerja> pekerjaSet = new HashSet<>();
-        for (Long idPekerja : proyekDTO.getListPekerja()) {
-            Pekerja pekerja = pekerjaDb.findById(idPekerja)
-                .orElseThrow(() -> new IllegalArgumentException("Pekerja tidak ditemukan dengan ID: " + idPekerja));
-            pekerjaSet.add(pekerja);
+        Set<Pekerja> pekerjaSet = new HashSet<>();
+        if(proyekDTO.getListPekerja() != null) {
+            for (Long idPekerja : proyekDTO.getListPekerja()) {
+                Pekerja pekerja = pekerjaDb.findById(idPekerja)
+                    .orElseThrow(() -> new IllegalArgumentException("Pekerja tidak ditemukan dengan ID: " + idPekerja));
+                pekerjaSet.add(pekerja);
+            }
         }
         proyek.setListPekerja(new ArrayList<>(pekerjaSet));
             var newProyek = proyekDb.save(proyek);
@@ -124,7 +126,7 @@ public class ProyekRestServiceImpl implements ProyekRestService{
         var listPekerjaExisting = proyek.getListPekerja();
 
         // Hapus pekerja yang sudah tidak ada dalam list baru
-        if (listPekerjaExisting != null && !listPekerjaExisting.isEmpty()) {
+        if (listPekerjaExisting != null && !listPekerjaExisting.isEmpty() && proyekDTO.getListPekerja() != null) {
             listPekerjaExisting.forEach(pekerja -> {
                 if (!proyekDTO.getListPekerja().contains(pekerja.getId())) {
                     pekerja.getListProyek().remove(proyek);
