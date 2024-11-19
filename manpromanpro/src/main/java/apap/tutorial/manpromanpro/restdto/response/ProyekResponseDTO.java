@@ -38,4 +38,7 @@ public class ProyekResponseDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Jakarta")
     private Date updatedAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone = "Asia/Jakarta")
+    private Date deletedAt;
 }

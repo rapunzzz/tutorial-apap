@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ManproManpro</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333333;
+        }
+        
+        /* Container for the login form with blue gradient */
+        .login-container {
+            background: linear-gradient(145deg, #007BFF, #00BFFF);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.15);
+            width: 320px;
+            text-align: center;
+            color: white;
+        }
+        
+        /* Heading styles */
+        h2 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+ 
+        /* Label styling */
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 6px;
+            color: #e0e0e0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+ 
+        /* Input field styling with bolder outline and shadow */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            border: 5px solid #cccccc; /* Increased border thickness */
+            border-radius: 10px;
+            font-size: 14px;
+            background-color: #ffffff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+ 
+        /* Bold border and glow effect on focus */
+        input:focus {
+            border-color: #f0975d; /* Strong blue border */
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.8); /* More intense blue glow */
+            outline: none;
+        }
+ 
+        /* Button styling */
+        button {
+            background-color: #004080;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+ 
+        /* Button hover effect */
+        button:hover {
+            background-color: #002f6c;
+        }
+ 
+        /* Placeholder text color */
+        input::placeholder {
+            color: #666666;
+        }
+ 
+        /* Icon styling */
+        .login-icon {
+            font-size: 18px;
+        }
+    </style>
+    <!-- Including Font Awesome for the login icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Welcome Back!</h2>
+        <form th:action="@{/login}" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required="required" placeholder="Enter your username" />
+ 
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required="required" placeholder="Enter your password" />
+ 
+            <button type="submit">
+                <i class="fas fa-sign-in-alt login-icon"></i>
+                Login
+            </button>
+        </form>
+    </div>
+</body>
+</html>
+ 

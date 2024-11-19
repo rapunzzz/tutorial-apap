@@ -45,10 +45,10 @@
                         <td>
                             <div class="text-center">
                                 <a type="button" class="btn btn-md btn-primary"
-                                    th:href="@{/pekerja/rest/{idPekerja}(idPekerja=${pekerja.id})}">Detail
+                                    th:href="@{/pekerja/{idPekerja}(idPekerja=${pekerja.id})}">Detail
                                 </a>
                                 <a type="button" class="btn btn-md btn-warning"
-                                    th:href="@{/pekerja/rest/{idPekerja}/update(idPekerja=${pekerja.id})}"> Update
+                                    th:href="@{/pekerja/{idPekerja}/update(idPekerja=${pekerja.id})}"> Update
                                 </a>
                             </div>
                         </td>
@@ -65,7 +65,7 @@
             <div class="text-center m-3">
                 <button type="button" id="deleteBtn" class="btn btn-danger">Delete Selected</button>
                 <div>
-                    <a class="btn btn-primary m-2" href="/pekerja/rest/add">Tambah Pekerja</a>
+                    <a class="btn btn-primary m-2" href="/pekerja/add">Tambah Pekerja</a>
                     <a class="btn btn-md btn-primary" href="/">Home</a>
                 </div>
             </div>

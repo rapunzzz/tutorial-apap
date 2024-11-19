@@ -170,7 +170,9 @@ public class ProyekRestServiceImpl implements ProyekRestService{
         proyekResponseDTO.setTanggalMulai(proyek.getTanggalMulai());
         proyekResponseDTO.setTanggalSelesai(proyek.getTanggalSelesai());
         proyekResponseDTO.setStatus(proyek.getStatus());
-        
+        proyekResponseDTO.setCreatedAt(proyek.getCreatedAt());
+        proyekResponseDTO.setUpdatedAt(proyek.getUpdatedAt());
+        proyekResponseDTO.setDeletedAt(proyek.getDeletedAt());
         // Add Developer details to the response
         Developer developer = proyek.getDeveloper();
 
